@@ -1,4 +1,5 @@
 # ChartsPOC
 POC of Horizon Chart Usage
 
-Specific files pertaining to chart usage are: index.html and charts.html
+Some testing in testdashboard with horizon's built in chart modules.
+Further testing with d3 in d3 folder.
