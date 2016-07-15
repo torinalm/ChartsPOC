@@ -2,6 +2,16 @@ body {
   font: 10px sans-serif;
 }
 
+.legend {
+  font-size: 12px;
+}
+rect {
+  cursor: pointer;                           /* NEW */
+  stroke-width: 2;
+}
+rect.disabled {                              /* NEW */
+  fill: transparent !important;              /* NEW */
+}   
 .axis path,
 .axis line {
   fill: none;
@@ -87,11 +97,13 @@ body {
   font-weight: 600;
   fill: #fff;
 }
-
+*/
 #chart {
+  height: 360px;
   position: relative;
+  width: 360px;
 }
-
+/*
 #chart path {
   stroke: #fff;
 }

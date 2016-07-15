@@ -29,9 +29,9 @@ d3.csv("data.csv", type, function(error, data) {
   var g = svg.selectAll(".arc")
       .data(pie(data))
       .enter().append("g")
-      .attr("class", "arc");//places classes for arcs to hide in
+      .attr("class", "arc");
 
-  g.append("path")//actuall arcs
+  g.append("path")//actual arcs
       .attr("d", arc)
       .style("fill", function(d) { return color(d.data.age); });
 
