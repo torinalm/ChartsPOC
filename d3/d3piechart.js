@@ -29,13 +29,13 @@ d3.csv("data.csv", type, function(error, data) {
   var g = svg.selectAll(".arc")
       .data(pie(data))
       .enter().append("g")
-      .attr("class", "arc");
+      .attr("class", "arc");//places classes for arcs to hide in
 
-  g.append("path")
+  g.append("path")//actuall arcs
       .attr("d", arc)
       .style("fill", function(d) { return color(d.data.age); });
 
-  g.append("title")
+  g.append("title") //Tooltip
       .text(function(d) { return "Age: " + d.data.age + "\nPopulation: " + d.data.population; });
 });
 
