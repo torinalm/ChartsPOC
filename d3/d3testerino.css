@@ -95,7 +95,7 @@ rect.disabled {                              /* NEW */
 h3 {
   color: white;
   padding: 10px;
-  font-family: sans-serif;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 16px;
   text-align: center;
   margin: 0px;
