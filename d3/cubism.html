@@ -41,6 +41,7 @@ var data = d3.csv("GlobalLandTemperaturesByCountry.csv", function(d) {
     d.AverageTemperature = +d.AverageTemperature;
     d.AverageTemperatureUncertainty = +d.AverageTemperatureUncertainty;
     d.dt = format.parse(d.dt);
+    d.color = '#'+Math.floor(Math.random()*16777215).toString(16);
   })
 
   var sites = d;
@@ -58,7 +59,35 @@ var data = d3.csv("GlobalLandTemperaturesByCountry.csv", function(d) {
     .orient("left")
     .scale(y);
 
-
+  // var line = d3.svg.line()
+  //   .x(function(d) { return x(d.dt.getFullYear());})
+  //   .y(function(d) { return y(d.AverageTemperature);})
+  //
+  // svg.append("g")
+  //   .attr("class", "x axis")
+  //   .attr("transform", "translate(0," + h + ")")
+  //   .call(xAxis);
+  //
+  // svg.append("g")
+  //   .attr("class", "y axis")
+  //   .call(yAxis)
+  //   .append("text")
+  //   .attr("transform", "rotate(-90)")
+  //   .attr("y", 6)
+  //   .attr("dy", ".71em");
+  //
+  // svg.append("path")
+  //   .datum(sites)
+  //   .attr("class", "line")
+  //   .attr("d", line);
+  //
+  // svg.append("text")
+  //   .attr("x", w/2 + "")
+  //   .attr("y", h/2 + "")
+  //   .attr("fill", "white")
+  //   .attr("font-size", "128")
+  //   .text("L U X");
+  //
   var circles = svg.selectAll("circle")
     .data(sites)
     .enter()
@@ -66,7 +95,7 @@ var data = d3.csv("GlobalLandTemperaturesByCountry.csv", function(d) {
     .attr("cx", function(d) { return x(d.dt.getFullYear()); })
     .attr("cy", function(d) { return y(d.AverageTemperature); })
     .attr("r", function(d) { return (d.dt.getFullYear() / 150);})
-    .attr("fill", function(d) {return "#" + d.dt.getFullYear() + "0f";})
+    .attr("fill", function(d) {return d.color;})
     .append("title")
     .text(function(d) {return d.AverageTemperature;});
 
