@@ -43,42 +43,42 @@ var data = d3.csv("GlobalLandTemperaturesByCountry.csv", function(d) {
     d.dt = format.parse(d.dt);
   })
 
-  var sites = d.slice(0, 20);
+  var sites = d;
+  // sites.concat(d.slice(10000,10300));
   console.log(sites);
 
+  var x = d3.scale.linear().domain([d3.min(d, function(d) { return d.dt.getFullYear();}), d3.max(d, function(d) { return d.dt.getFullYear();})]).range([padding, w - padding]);
+  var y = d3.scale.linear().domain([0, d3.max(d, function(d) { return d.AverageTemperature; })])
+          .rangeRound([h - padding, padding]);
 
-  // var x = d3.scale.linear().domain([d3.min(d, function(d) { return d.dt.getYear();}), d3.max(d, function(d) { return d.dt.getYear;})]).range([padding, w - padding]);
-  // var y = d3.scale.linear().domain([0, d3.max(d, function(d) { return d.AverageTemperature; })])
-  //         .rangeRound([h - padding, padding]);
-  //
-  // var xAxis = d3.svg.axis()
-  //   .orient("bottom")
-  //   .scale(x);
-  // var yAxis = d3.svg.axis()
-  //   .orient("left")
-  //   .scale(y);
-  //
-  //
-  // var circles = svg.selectAll("circle")
-  //   .data(d)
-  //   .enter()
-  //   .append("circle")
-  //   .attr("cx", function(d) { return x(+d.dt.getYear()); })
-  //   .attr("cy", function(d) { return y(d.AverageTemperature); })
-  //   .attr("r", function(d) { return (d.dt.getYear() / 4);})
-  //   .attr("fill", "black")
-  //   .append("title")
-  //   .text(function(d) {return d.AverageTemperature;});
-  //
-  // svg.append("g")
-  //   .attr("class", "axis")
-  //   .attr("transform", "translate(0, " + (h - padding) + ")")
-  //   .call(xAxis);
-  //
-  // svg.append("g")
-  //   .attr("class", "axis")
-  //   .attr("transform", "translate("+ padding +",0)")
-  //   .call(yAxis);
+  var xAxis = d3.svg.axis()
+    .orient("bottom")
+    .scale(x);
+  var yAxis = d3.svg.axis()
+    .orient("left")
+    .scale(y);
+
+
+  var circles = svg.selectAll("circle")
+    .data(sites)
+    .enter()
+    .append("circle")
+    .attr("cx", function(d) { return x(d.dt.getFullYear()); })
+    .attr("cy", function(d) { return y(d.AverageTemperature); })
+    .attr("r", function(d) { return (d.dt.getFullYear() / 150);})
+    .attr("fill", function(d) {return "#" + d.dt.getFullYear() + "0f";})
+    .append("title")
+    .text(function(d) {return d.AverageTemperature;});
+
+  svg.append("g")
+    .attr("class", "axis")
+    .attr("transform", "translate(0, " + (h - padding) + ")")
+    .call(xAxis);
+
+  svg.append("g")
+    .attr("class", "axis")
+    .attr("transform", "translate("+ padding +",0)")
+    .call(yAxis);
 });
 
 // d3.select("body").selectAll(".horizon")
