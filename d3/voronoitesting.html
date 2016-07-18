@@ -22,12 +22,12 @@ svg {
 }
 
 .polygons {
-  fill: none;
-  stroke: #000;
+  fill: #000;
+  stroke: #fff;
 }
 
 .polygons :first-child {
-  fill: #f00;
+  fill: #fff;
 }
 
 .sites {
@@ -36,7 +36,7 @@ svg {
 }
 
 .sites :first-child {
-  fill: #fff;
+  fill: #000;
 }
 
 </style>
@@ -51,11 +51,33 @@ var svg = d3.select("svg").on("touchmove mousemove", moved).attr("width", window
     width = +svg.attr("width"),
     height = +svg.attr("height");
 
-svg.attr("width", window.innerWidth)
-  .attr("height", window.innerHeight);
+// var sites = d3.range(100)
+//     .map(function(d) { return [Math.random() * width, Math.random() * height]; });
 
-var sites = d3.range(100)
-    .map(function(d) { return [Math.random() * width, Math.random() * height]; });
+var sites = [
+  [10, 10],
+  [10, 40],
+  [10, 80],
+  [10, 160],
+  [10, 320],
+  [10, 640],
+  [10, 1280],
+  [20, 20],
+  [40, 40],
+  [80, 80],
+  [160, 160],
+  [320, 320],
+  [640, 640],
+  [1280, 1280],
+  [40, 10],
+  [80, 10],
+  [160, 10],
+  [320, 10],
+  [640, 10],
+  [1280, 10],
+]
+
+console.log(sites);
 
 var voronoi = d3.voronoi()
     .extent([[-1, -1], [width + 1, height + 1]]);
