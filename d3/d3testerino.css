@@ -1,5 +1,6 @@
 body {
   font: 10px sans-serif;
+  margin: 0px;
 }
 
 .legend {
@@ -11,7 +12,7 @@ rect {
 }
 rect.disabled {                              /* NEW */
   fill: transparent !important;              /* NEW */
-}   
+}
 .axis path,
 .axis line {
   fill: none;
@@ -72,59 +73,33 @@ rect.disabled {                              /* NEW */
   top: 100%;
   left: 0;
 }
-/*
 
-#main {
-  float: left;
-  width: 750px;
+#title {
+  margin-top: 0;
+  width: auto;
+  height: 40px;
+  background-color: darkgray;
 }
 
-#sidebar {
-  float: right;
-  width: 100px;
-}
-
-#sequence {
-  width: 600px;
-  height: 70px;
-}
-
-#legend {
-  padding: 10px 0 0 3px;
-}
-
-#sequence text, #legend text {
-  font-weight: 600;
-  fill: #fff;
-}
-*/
 #chart {
   height: 360px;
+  padding-top: 20px;
+  align-self: center;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
   position: relative;
   width: 360px;
 }
-/*
-#chart path {
-  stroke: #fff;
-}
-
-#explanation {
-  position: absolute;
-  top: 260px;
-  left: 305px;
-  width: 140px;
-  text-align: center;
-  color: #666;
-  z-index: -1;
-}
-
-#percentage {
-  font-size: 2.5em;
-}*/
 
 h3 {
-  color: black;
+  color: white;
+  padding: 10px;
+  font-family: sans-serif;
   font-size: 16px;
+  text-align: center;
+  margin: 0px;
+  background-color: darkgray;
 }
 
 /*line.crisp {
