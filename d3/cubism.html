@@ -31,12 +31,24 @@ var padding = 2 * radius;
 
 var format = d3.time.format("%Y-%d-%m");
 
-var svg = d3.select("body")
-            .append("svg")
-            .attr("width", w)
-            .attr("height", h);
+// var svg = d3.select("body")
+//             .append("svg")
+//             .attr("width", w)
+//             .attr("height", h);
+var countries = [];
 
 var data = d3.csv("GlobalLandTemperaturesByCountry.csv", function(d) {
+  d.forEach(function(d){
+    for(var i = 0; i < countries.length; i++){
+      if(d.Country === countries[i]){
+        return;
+      }
+    }
+    countries.push(d.Country);
+  });
+
+  console.log(countries);
+
   d.forEach(function(d){
     d.AverageTemperature = +d.AverageTemperature;
     d.AverageTemperatureUncertainty = +d.AverageTemperatureUncertainty;
@@ -48,20 +60,29 @@ var data = d3.csv("GlobalLandTemperaturesByCountry.csv", function(d) {
   // sites.concat(d.slice(10000,10300));
   console.log(sites);
 
-  var x = d3.scale.linear().domain([d3.min(d, function(d) { return d.dt.getFullYear();}), d3.max(d, function(d) { return d.dt.getFullYear();})]).range([padding, w - padding]);
-  var y = d3.scale.linear().domain([0, d3.max(d, function(d) { return d.AverageTemperature; })])
-          .rangeRound([h - padding, padding]);
+  // var context = cubism.context()
+  //   .step(1e4)
+  //   .size(w);
+  //
+  // d3.select("body").selectAll(".axis")
+  //   .data(["top", "bottom"])
 
-  var xAxis = d3.svg.axis()
-    .orient("bottom")
-    .scale(x);
-  var yAxis = d3.svg.axis()
-    .orient("left")
-    .scale(y);
 
+  // var x = d3.scale.linear().domain([d3.min(d, function(d) { return d.dt.getFullYear();}), d3.max(d, function(d) { return d.dt.getFullYear();})]).range([padding, w - padding]);
+  // var y = d3.scale.linear().domain([0, d3.max(d, function(d) { return d.AverageTemperature; })])
+  //         .rangeRound([h - padding, padding]);
+  //
+  // var xAxis = d3.svg.axis()
+  //   .orient("bottom")
+  //   .scale(x);
+  // var yAxis = d3.svg.axis()
+  //   .orient("left")
+  //   .scale(y);
+
+  //Line chart. Literally one line touching all data points...
   // var line = d3.svg.line()
   //   .x(function(d) { return x(d.dt.getFullYear());})
-  //   .y(function(d) { return y(d.AverageTemperature);})
+  //   .y(function(d) { return y(d.AverageTemperature);});
   //
   // svg.append("g")
   //   .attr("class", "x axis")
@@ -79,35 +100,37 @@ var data = d3.csv("GlobalLandTemperaturesByCountry.csv", function(d) {
   // svg.append("path")
   //   .datum(sites)
   //   .attr("class", "line")
-  //   .attr("d", line);
-  //
+  //   .attr("d", line)
+  //   .attr("stroke", function(d) {return d.color;});
+
   // svg.append("text")
   //   .attr("x", w/2 + "")
   //   .attr("y", h/2 + "")
   //   .attr("fill", "white")
   //   .attr("font-size", "128")
   //   .text("L U X");
+
+  //Scatter plot. 
+  // var circles = svg.selectAll("circle")
+  //   .data(sites)
+  //   .enter()
+  //   .append("circle")
+  //   .attr("cx", function(d) { return x(d.dt.getFullYear()); })
+  //   .attr("cy", function(d) { return y(d.AverageTemperature); })
+  //   .attr("r", function(d) { return (d.dt.getFullYear() / 150);})
+  //   .attr("fill", function(d) {return d.color;})
+  //   .append("title")
+  //   .text(function(d) {return d.AverageTemperature;});
   //
-  var circles = svg.selectAll("circle")
-    .data(sites)
-    .enter()
-    .append("circle")
-    .attr("cx", function(d) { return x(d.dt.getFullYear()); })
-    .attr("cy", function(d) { return y(d.AverageTemperature); })
-    .attr("r", function(d) { return (d.dt.getFullYear() / 150);})
-    .attr("fill", function(d) {return d.color;})
-    .append("title")
-    .text(function(d) {return d.AverageTemperature;});
-
-  svg.append("g")
-    .attr("class", "axis")
-    .attr("transform", "translate(0, " + (h - padding) + ")")
-    .call(xAxis);
-
-  svg.append("g")
-    .attr("class", "axis")
-    .attr("transform", "translate("+ padding +",0)")
-    .call(yAxis);
+  // svg.append("g")
+  //   .attr("class", "axis")
+  //   .attr("transform", "translate(0, " + (h - padding) + ")")
+  //   .call(xAxis);
+  //
+  // svg.append("g")
+  //   .attr("class", "axis")
+  //   .attr("transform", "translate("+ padding +",0)")
+  //   .call(yAxis);
 });
 
 // d3.select("body").selectAll(".horizon")
