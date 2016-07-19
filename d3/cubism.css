@@ -1,7 +1,7 @@
 body {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   margin: 30px auto;
-  width: 1280px;
+  width: 1440px;
   position: relative;
 }
 
@@ -24,23 +24,23 @@ header {
   -webkit-transition: fill-opacity 250ms linear;
 }
 
-.axis path {
+.topaxis path {
   display: none;
 }
 
-.axis line {
+.topaxis line {
   stroke: #000;
   shape-rendering: crispEdges;
 }
 
-.axis.top {
+.topaxis {
   background-image: linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
   background-image: -o-linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
   background-image: -moz-linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
-  background-image: -webkit-linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
+  background-image: -webkit-linear-gradient(top, #f3ebcf 0%, rgba(255,255,255,0) 100%);
   background-image: -ms-linear-gradient(top, #fff 0%, rgba(255,255,255,0) 100%);
   top: 0px;
-  padding: 0 0 24px 0;
+  padding: 0 0 0px 0px;
 }
 
 .axis.bottom {
@@ -57,6 +57,7 @@ header {
   border-bottom: solid 1px #000;
   overflow: hidden;
   position: relative;
+  background-color: #f3ebcf;
 }
 
 .horizon {
@@ -92,5 +93,12 @@ header {
 
 .line {
   background: #000;
+  opacity: .2;
   z-index: 2;
+}
+
+@media all and (max-width: 1439px) {
+  body { margin: 0px auto; }
+  .axis { position: static; }
+  .axis.top, .axis.bottom { padding: 0; }
 }

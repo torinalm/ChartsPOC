@@ -2,6 +2,9 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="cubism.css">
+<head>
+  <title>ALL THE DATA</title>
+</head>
 <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="https://square.github.io/cubism/cubism.v1.min.js"></script>
 <body id="demo">
@@ -49,24 +52,63 @@ var data = d3.csv("GlobalLandTemperaturesByCountry.csv", function(d) {
 
   console.log(countries);
 
+  var colors = [];
+  for(var i = 0; i < countries.length; i++){
+    colors.push([countries[i], '#'+Math.floor(Math.random()*16777215).toString(16)]);
+  };
+  console.log(colors);
+
   d.forEach(function(d){
     d.AverageTemperature = +d.AverageTemperature;
     d.AverageTemperatureUncertainty = +d.AverageTemperatureUncertainty;
     d.dt = format.parse(d.dt);
-    d.color = '#'+Math.floor(Math.random()*16777215).toString(16);
-  })
+    // d.color = '#'+Math.floor(Math.random()*16777215).toString(16);
+  });
 
   var sites = d;
   // sites.concat(d.slice(10000,10300));
   console.log(sites);
 
-  // var context = cubism.context()
-  //   .step(1e4)
-  //   .size(w);
-  //
-  // d3.select("body").selectAll(".axis")
-  //   .data(["top", "bottom"])
+  var context = cubism.context()
+    .step(7e9)
+    .size(1440);
 
+  d3.select("body").selectAll(".axis")
+    .data(["top"])
+    .enter().append("div")
+    .attr("class", function(d) {return d + "axis";})
+    .each(function(d) { d3.select(this).call(context.axis().ticks(12).orient(d));});
+
+  d3.select("body").append("div")
+    .attr("class", "rule")
+    .call(context.rule());
+
+  d3.select("body").selectAll(".horizon")
+    .data(countries.map(random))
+    .enter().insert("div", ".bottom")
+    .attr("class", "horizon")
+    .call(context.horizon().extent([-10, 10]));
+
+  context.on("focus", function(i) {
+    d3.selectAll(".value").style("right", i == null ? null : context.size() - i + "px");
+  });
+
+  function random(x) {
+    var value = 0,
+        values = [],
+        i = 0,
+        last;
+    return context.metric(function(start, stop, step, callback) {
+      start = +start, stop = +stop;
+      if (isNaN(last)) last = start;
+      while (last < stop) {
+        last += step;
+        value = Math.max(-10, Math.min(10, value + .8 * Math.random() - .4 + .2 * Math.cos(i += x * .02)));
+        values.push(value);
+      }
+      callback(null, values = values.slice((start - stop) / step));
+    }, x);
+  }
 
   // var x = d3.scale.linear().domain([d3.min(d, function(d) { return d.dt.getFullYear();}), d3.max(d, function(d) { return d.dt.getFullYear();})]).range([padding, w - padding]);
   // var y = d3.scale.linear().domain([0, d3.max(d, function(d) { return d.AverageTemperature; })])
@@ -110,7 +152,7 @@ var data = d3.csv("GlobalLandTemperaturesByCountry.csv", function(d) {
   //   .attr("font-size", "128")
   //   .text("L U X");
 
-  //Scatter plot. 
+  //Scatter plot.
   // var circles = svg.selectAll("circle")
   //   .data(sites)
   //   .enter()
